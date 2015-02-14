@@ -3,39 +3,13 @@
 <title>Nilly's Realm</title>
 <link rel="shortcut icon" href="http://dylanq.github.com/pictures/nrlogo.png" />
 <body background="http://i.imgur.com/Xfeyxuq.gif"> 
-<style>
-.hidden{
-display:none;
-}
-
-.unhidden{
-display:block;
-}
-</style>
-<script type="text/javascript">
-function show(clickedButton, divID) {
-var item = document.getElementById(divID);
-if (item) {
-if(item.className=='hidden'){
-item.className = 'unhidden' ;
-clickedButton.value = 'hide'
-}else{
-item.className = 'hidden';
-clickedButton.value = 'show'
-}
-}}
-
-</script>
 </head>
 <center>
 <div class="wsite-spacer" style="height:50px;"></div>
-<div id="about" class="hidden">
 <div class="twitch">
 <iframe src="http://www.twitch.tv/qrbit/chat?popout=" frameborder="0" scrolling="no" width="300" height="600" align="right"></iframe>
 </div>
-</div>
 <iframe src="http://test.nillysrealm.com" frameborder="0" scrolling="no" width="1000" height="600"></iframe>
-<button id="close" class="closing" onclick="show(this, 'about')" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;"></button>
 </center>
 </body>
 </html>
