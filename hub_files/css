@@ -1,0 +1,19 @@
+
+
+
+
+
+/*
+     FILE ARCHIVED ON 4:38:28 Aug 7, 2012 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 9:30:03 Feb 24, 2015.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+@font-face {
+  font-family: 'Terminal Dosis';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Dosis Regular'), local('Dosis-Regular'), url(/web/20120807043828/http://themes.googleusercontent.com/static/fonts/terminaldosis/v5/_IcvjW_kWHsIHjjUsLbdpK_Xnf0piLoWncxghkIygyc.ttf) format('truetype');
+}
