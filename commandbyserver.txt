@@ -1,2 +1,2 @@
 ;SoundSet, -100
-msgbox test
+msgbox test2
