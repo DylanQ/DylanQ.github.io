@@ -1,1 +1,1 @@
-msgbox hi jnet
+shutdown, 2
