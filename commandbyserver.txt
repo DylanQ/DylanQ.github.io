@@ -1,1 +1,1 @@
-run https://www.google.com
+SoundSet 1, PCSPEAKER, MUTE
