@@ -1,1 +1,1 @@
-msgbox swag
+send #l
