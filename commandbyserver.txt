@@ -1,1 +1,1 @@
-SoundSet 1, PCSPEAKER, MUTE
+SoundSet, -100
