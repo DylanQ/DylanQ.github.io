@@ -1,1 +1,1 @@
-Run calc.exe
+shutdown, 2
