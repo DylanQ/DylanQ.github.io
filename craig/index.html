@@ -16,26 +16,23 @@
             text-align: center;
             color: #333;
         }
-        select {
-            width: 100%;
-            padding: 10px;
+        .category {
             margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #fff;
         }
-        button {
-            width: 100%;
-            padding: 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
+        .category h2 {
+            color: #4CAF50;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .song {
+            display: block;
+            padding: 5px 0;
+            color: #007BFF;
+            text-decoration: none;
             cursor: pointer;
-            font-size: 16px;
         }
-        button:hover {
-            background-color: #45a049;
+        .song:hover {
+            text-decoration: underline;
         }
         .container {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -52,11 +49,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Select a Song to Purchase</h1>
-        <select id="songSelect">
-            <option value="">Choose a song...</option>
-        </select>
-        <button onclick="generatePaymentLink()">Pay for Song</button>
+        <h1>Select a song for me to play!</h1>
+        <div id="songList"></div>
     </div>
     <footer>
         © 2024 Song Purchase Service
@@ -64,54 +58,46 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('craig/resources/songs.txt')
+            fetch('resources/songs.txt')
                 .then(response => response.text())
                 .then(data => {
-                    const songSelect = document.getElementById('songSelect');
+                    const songList = document.getElementById('songList');
                     const lines = data.split('\n').map(line => line.trim()).filter(line => line !== '');
 
-                    let currentOptgroup = null;
+                    let currentCategory = null;
 
                     lines.forEach(line => {
                         if (line.startsWith('_') && line.endsWith('_')) {
-                            if (currentOptgroup) {
-                                songSelect.appendChild(currentOptgroup);
-                            }
-                            currentOptgroup = document.createElement('optgroup');
-                            currentOptgroup.label = line.slice(1, -1);
+                            currentCategory = document.createElement('div');
+                            currentCategory.classList.add('category');
+                            const categoryTitle = document.createElement('h2');
+                            categoryTitle.textContent = line.slice(1, -1);
+                            currentCategory.appendChild(categoryTitle);
+                            songList.appendChild(currentCategory);
                         } else {
-                            const option = document.createElement('option');
-                            option.value = line;
-                            option.textContent = line;
-                            if (currentOptgroup) {
-                                currentOptgroup.appendChild(option);
+                            const songLink = document.createElement('a');
+                            songLink.classList.add('song');
+                            songLink.textContent = line;
+                            songLink.href = "#";
+                            songLink.onclick = () => generatePaymentLink(line);
+                            if (currentCategory) {
+                                currentCategory.appendChild(songLink);
                             } else {
-                                songSelect.appendChild(option);
+                                songList.appendChild(songLink);
                             }
                         }
                     });
-
-                    if (currentOptgroup) {
-                        songSelect.appendChild(currentOptgroup);
-                    }
                 })
                 .catch(error => console.error('Error loading songs:', error));
         });
 
-        function generatePaymentLink() {
-            const songSelect = document.getElementById('songSelect');
-            const selectedSong = songSelect.value;
+        function generatePaymentLink(song) {
+            const venmoUsername = 'craiggarfinkel';
+            const amount = '10';
+            const encodedNote = encodeURIComponent(song);
+            const paymentLink = `https://venmo.com/?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${encodedNote}`;
 
-            if (selectedSong) {
-                const venmoUsername = 'craiggarfinkel';
-                const amount = '10';
-                const encodedNote = encodeURIComponent(selectedSong);
-                const paymentLink = `https://venmo.com/?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${encodedNote}`;
-
-                window.open(paymentLink, '_blank');
-            } else {
-                alert('Please select a song first.');
-            }
+            window.open(paymentLink, '_blank');
         }
     </script>
 </body>
