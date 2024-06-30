@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Have me play a song!</title>
+    <title>Song Payment Selector</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -106,7 +106,7 @@
                 const venmoUsername = 'craiggarfinkel';
                 const amount = '10';
                 const encodedNote = encodeURIComponent(selectedSong);
-                const paymentLink = https://venmo.com/?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${encodedNote};
+                const paymentLink = `https://venmo.com/?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${encodedNote}`;
 
                 window.open(paymentLink, '_blank');
             } else {
