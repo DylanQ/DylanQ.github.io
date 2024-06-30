@@ -7,10 +7,33 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             background-color: #f9f9f9;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            background-color: #333;
+            padding: 20px;
+            position: fixed;
+            overflow-y: auto;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            margin-bottom: 5px;
+        }
+        .sidebar a:hover {
+            background-color: #555;
+        }
+        .main-content {
+            margin-left: 240px;
+            padding: 20px;
+            max-width: 600px;
         }
         h1 {
             text-align: center;
@@ -48,30 +71,42 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Select a song for me to play!</h1>
-        <div id="songList"></div>
+    <div class="sidebar" id="categorySidebar"></div>
+    <div class="main-content">
+        <div class="container">
+            <h1>Select a song for me to play!</h1>
+            <div id="songList"></div>
+        </div>
+        <footer>
+            © 2024 Song Purchase Service
+        </footer>
     </div>
-    <footer>
-        © 2024 Song Purchase Service
-    </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetch('resources/songs.txt')
                 .then(response => response.text())
                 .then(data => {
                     const songList = document.getElementById('songList');
+                    const categorySidebar = document.getElementById('categorySidebar');
                     const lines = data.split('\n').map(line => line.trim()).filter(line => line !== '');
-
                     let currentCategory = null;
-
                     lines.forEach(line => {
                         if (line.startsWith('_') && line.endsWith('_')) {
+                            const categoryName = line.slice(1, -1);
+                            const categoryId = 'category-' + categoryName.toLowerCase().replace(/\s+/g, '-');
+                            
+                            // Create sidebar link
+                            const sidebarLink = document.createElement('a');
+                            sidebarLink.href = '#' + categoryId;
+                            sidebarLink.textContent = categoryName;
+                            categorySidebar.appendChild(sidebarLink);
+                            
+                            // Create category in main content
                             currentCategory = document.createElement('div');
                             currentCategory.classList.add('category');
+                            currentCategory.id = categoryId;
                             const categoryTitle = document.createElement('h2');
-                            categoryTitle.textContent = line.slice(1, -1);
+                            categoryTitle.textContent = categoryName;
                             currentCategory.appendChild(categoryTitle);
                             songList.appendChild(currentCategory);
                         } else {
@@ -90,13 +125,11 @@
                 })
                 .catch(error => console.error('Error loading songs:', error));
         });
-
         function generatePaymentLink(song) {
             const venmoUsername = 'craiggarfinkel';
             const amount = '10';
             const encodedNote = encodeURIComponent(song);
             const paymentLink = `https://venmo.com/?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${encodedNote}`;
-
             window.open(paymentLink, '_blank');
         }
     </script>
