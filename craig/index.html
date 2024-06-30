@@ -59,22 +59,41 @@
         <button onclick="generatePaymentLink()">Pay for Song</button>
     </div>
     <footer>
-        © 2024 Craig's Song Purchase Service
+        © 2024 Song Purchase Service
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('/craig/resources/songs.txt')
+            fetch('/resources/songs.txt')
                 .then(response => response.text())
                 .then(data => {
-                    const songs = data.split('\n').filter(song => song.trim() !== '');
                     const songSelect = document.getElementById('songSelect');
-                    songs.forEach(song => {
-                        const option = document.createElement('option');
-                        option.value = song;
-                        option.textContent = song;
-                        songSelect.appendChild(option);
+                    const lines = data.split('\n').map(line => line.trim()).filter(line => line !== '');
+
+                    let currentOptgroup = null;
+
+                    lines.forEach(line => {
+                        if (line.startsWith('_') && line.endsWith('_')) {
+                            if (currentOptgroup) {
+                                songSelect.appendChild(currentOptgroup);
+                            }
+                            currentOptgroup = document.createElement('optgroup');
+                            currentOptgroup.label = line.slice(1, -1);
+                        } else {
+                            const option = document.createElement('option');
+                            option.value = line;
+                            option.textContent = line;
+                            if (currentOptgroup) {
+                                currentOptgroup.appendChild(option);
+                            } else {
+                                songSelect.appendChild(option);
+                            }
+                        }
                     });
+
+                    if (currentOptgroup) {
+                        songSelect.appendChild(currentOptgroup);
+                    }
                 })
                 .catch(error => console.error('Error loading songs:', error));
         });
