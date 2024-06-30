@@ -3,21 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song Payment Selector</title>
+    <title>Jukebox Song Selector</title>
     <style>
+        :root {
+            --primary-color: #ff4081;
+            --secondary-color: #3f51b5;
+            --background-color: #f0f0f0;
+            --text-color: #333;
+        }
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .jukebox {
             display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .jukebox-header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .jukebox-body {
+            display: flex;
+            flex: 1;
         }
         .sidebar {
-            width: 200px;
-            height: 100vh;
-            background-color: #333;
+            background-color: var(--secondary-color);
             padding: 20px;
-            position: fixed;
+            width: 200px;
             overflow-y: auto;
         }
         .sidebar a {
@@ -26,59 +47,74 @@
             padding: 10px;
             text-decoration: none;
             margin-bottom: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
         .sidebar a:hover {
-            background-color: #555;
+            background-color: rgba(255,255,255,0.2);
         }
         .main-content {
-            margin-left: 240px;
+            flex: 1;
             padding: 20px;
-            max-width: 600px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
+            overflow-y: auto;
         }
         .category {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .category h2 {
-            color: #4CAF50;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 5px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
         }
         .song {
             display: block;
-            padding: 5px 0;
-            color: #007BFF;
+            padding: 10px;
+            color: var(--secondary-color);
             text-decoration: none;
             cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 5px;
         }
         .song:hover {
-            text-decoration: underline;
-        }
-        .container {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            background-color: white;
-            border-radius: 8px;
+            background-color: rgba(0,0,0,0.05);
         }
         footer {
+            background-color: var(--primary-color);
+            color: white;
             text-align: center;
-            margin-top: 20px;
-            color: #777;
+            padding: 10px;
+        }
+        @media (max-width: 768px) {
+            .jukebox-body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                order: -1;
+            }
+            .main-content {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar" id="categorySidebar"></div>
-    <div class="main-content">
-        <div class="container">
-            <h1>Select a song for me to play!</h1>
-            <div id="songList"></div>
+    <div class="jukebox">
+        <header class="jukebox-header">
+            <h1>Jukebox Song Selector</h1>
+        </header>
+        <div class="jukebox-body">
+            <nav class="sidebar" id="categorySidebar"></nav>
+            <main class="main-content">
+                <div id="songList"></div>
+            </main>
         </div>
         <footer>
-            © 2024 Song Purchase Service
+            © 2024 Jukebox Song Service
         </footer>
     </div>
     <script>
@@ -95,13 +131,11 @@
                             const categoryName = line.slice(1, -1);
                             const categoryId = 'category-' + categoryName.toLowerCase().replace(/\s+/g, '-');
                             
-                            // Create sidebar link
                             const sidebarLink = document.createElement('a');
                             sidebarLink.href = '#' + categoryId;
                             sidebarLink.textContent = categoryName;
                             categorySidebar.appendChild(sidebarLink);
                             
-                            // Create category in main content
                             currentCategory = document.createElement('div');
                             currentCategory.classList.add('category');
                             currentCategory.id = categoryId;
@@ -114,7 +148,10 @@
                             songLink.classList.add('song');
                             songLink.textContent = line;
                             songLink.href = "#";
-                            songLink.onclick = () => generatePaymentLink(line);
+                            songLink.onclick = (e) => {
+                                e.preventDefault();
+                                generatePaymentLink(line);
+                            };
                             if (currentCategory) {
                                 currentCategory.appendChild(songLink);
                             } else {
