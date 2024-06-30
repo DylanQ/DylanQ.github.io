@@ -38,10 +38,6 @@
             position: relative;
         }
         .menu-button {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
             background-color: var(--secondary-color);
             color: var(--background-color);
             border: none;
@@ -49,6 +45,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            margin-top: 10px;
         }
         .jukebox-body {
             display: flex;
@@ -85,8 +82,7 @@
             flex: 1;
             padding: 20px;
             overflow-y: auto;
-            background: url('https://i.imgur.com/ZJg4Ufn.png') no-repeat center center;
-            background-size: cover;
+            background-color: #2c3e50;
         }
         .category {
             background-color: rgba(255,255,255,0.1);
@@ -144,8 +140,8 @@
 <body>
     <div class="jukebox">
         <header class="jukebox-header">
-            <button class="menu-button" id="menuToggle">Categories</button>
             <h1>Classic Jukebox</h1>
+            <button class="menu-button" id="menuToggle">Categories</button>
         </header>
         <div class="jukebox-body">
             <nav class="sidebar" id="categorySidebar"></nav>
