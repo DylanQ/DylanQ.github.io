@@ -56,12 +56,14 @@
             background-color: rgba(0, 0, 0, 0.8);
             padding: 20px;
             width: 200px;
-            position: absolute;
-            left: -200px;
+            position: fixed;
+            left: -220px;
+            top: 0;
             height: 100%;
             transition: left 0.3s ease;
             overflow-y: auto;
             z-index: 10;
+            box-sizing: border-box;
         }
         .sidebar.active {
             left: 0;
@@ -124,8 +126,8 @@
             .sidebar {
                 width: 100%;
                 height: auto;
-                position: relative;
-                left: 0;
+                position: static;
+                left: auto;
                 display: none;
             }
             .sidebar.active {
@@ -150,8 +152,7 @@
             </main>
         </div>
         <footer>
-            © 2024 The Human Jukebox
-            Made with 💜 by Dylan Garfinkel
+            © 2024 The Human Jukebox\nMade with 💜 by Dylan Garfinkel
         </footer>
     </div>
     <script>
