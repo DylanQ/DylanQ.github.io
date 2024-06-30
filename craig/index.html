@@ -64,7 +64,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('/resources/songs.txt')
+            fetch('craig/resources/songs.txt')
                 .then(response => response.text())
                 .then(data => {
                     const songSelect = document.getElementById('songSelect');
