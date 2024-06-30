@@ -64,7 +64,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('/resources/songs.txt')
+            fetch('/craig/resources/songs.txt')
                 .then(response => response.text())
                 .then(data => {
                     const songs = data.split('\n').filter(song => song.trim() !== '');
