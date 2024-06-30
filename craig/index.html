@@ -162,6 +162,10 @@
                 sidebar.classList.toggle('active');
             });
 
+            function closeSidebar() {
+                sidebar.classList.remove('active');
+            }
+
             fetch('resources/songs.txt')
                 .then(response => response.text())
                 .then(data => {
@@ -177,6 +181,11 @@
                             const sidebarLink = document.createElement('a');
                             sidebarLink.href = '#' + categoryId;
                             sidebarLink.textContent = categoryName;
+                            sidebarLink.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                document.getElementById(categoryId).scrollIntoView({behavior: 'smooth'});
+                                closeSidebar();
+                            });
                             categorySidebar.appendChild(sidebarLink);
                             
                             currentCategory = document.createElement('div');
