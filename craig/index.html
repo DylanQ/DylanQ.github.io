@@ -164,7 +164,7 @@
         });
         function generatePaymentLink(song) {
             const venmoUsername = 'craiggarfinkel';
-            const amount = '10';
+            const amount = '5';
             const encodedNote = encodeURIComponent(song);
             const paymentLink = `https://venmo.com/?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${encodedNote}`;
             window.open(paymentLink, '_blank');
